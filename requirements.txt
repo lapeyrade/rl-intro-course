@@ -1,4 +1,8 @@
 numpy
 ipykernel
 matplotlib
+pandas
 gymnasium
+pygame
+torch
+torchvision

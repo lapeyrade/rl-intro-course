@@ -4,78 +4,69 @@ Ce répertoire contient une série de notebooks Jupyter qui présentent les conc
 
 ## Prérequis
 
-- [uv](https://github.com/astral-sh/uv), le gestionnaire ultra-rapide d'environnements et de paquets Python.
-- Un terminal en ligne de commande (instructions ci-dessous pour Windows et pour Mac/Linux).
+- Un terminal en ligne de commande (Mac/Linux ou Windows).
+- Python 3.13.9 recommandé.
+- Le gestionnaire de paquets [uv](https://github.com/astral-sh/uv) est facultatif mais vivement conseillé pour accélérer l'installation et isoler l'environnement. Vous pouvez aussi utiliser l'outillage Python standard (`python -m venv`, `pip`).
 
-## Installer uv (si nécessaire)
+## Installer uv (facultatif mais recommandé)
 
-### Mac/Linux
+- **Mac/Linux**
 
-```bash
-curl -LsSf https://astral.sh/uv/install.sh | sh
-```
+  ```bash
+  curl -LsSf https://astral.sh/uv/install.sh | sh
+  ```
 
-Le script ajoute `uv` à votre PATH shell. Redémarrez le terminal (ou rechargez le profil indiqué) afin que la commande `uv` soit reconnue.
+  Le script ajoute `uv` à votre PATH. Redémarrez le terminal ou rechargez votre profil.
 
-### Windows
+- **Windows**
 
-```powershell
-powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
-```
+  ```powershell
+  powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+  ```
 
-Le script ajoute `uv` à votre PATH. Redémarrez votre terminal (PowerShell ou Invite de commandes) pour rendre la commande `uv` disponible.
+  Le script ajoute `uv` à votre PATH PowerShell/Invite de commandes.
 
-## Préparer l'environnement Python avec uv
+## Préparer l'environnement Python
 
-Exécutez ces commandes depuis la racine du projet :
+Depuis la racine du projet, choisissez l'approche qui vous convient.
 
-### Mac/Linux
+### Avec uv (recommandé)
 
-```bash
-uv venv --python 3.13
-source .venv/bin/activate
-uv pip install -r requirements.txt
-```
+- **Mac/Linux**
 
-### Windows
+  ```bash
+  uv venv --python 3.13
+  source .venv/bin/activate
+  uv pip install -r requirements.txt
+  ```
 
-```powershell
-uv venv --python 3.13
-.venv\Scripts\activate
-uv pip install -r requirements.txt
-```
+- **Windows**
 
-**Explications :**
-- `uv venv --python 3.13` crée un environnement virtuel local dans `.venv` avec Python 3.13. Si cette version n'est pas déjà installée, `uv` la télécharge et l'installe automatiquement.
-- Le script d'activation dépend de la plateforme (`source .venv/bin/activate` sur Mac/Linux contre `.venv\Scripts\activate` sur Windows).
-- `uv pip install -r requirements.txt` installe toutes les dépendances listées dans le fichier. Actuellement il contient `numpy`, `ipykernel` et `jupyter`, nécessaires au premier notebook, mais vous pouvez y ajouter d'autres paquets au fil du cours.
+  ```powershell
+  uv venv --python 3.13
+  .venv\Scripts\activate
+  uv pip install -r requirements.txt
+  ```
 
-## Lancer les notebooks avec uv
+### Sans uv (outil standard Python)
 
-La commande est identique sur toutes les plateformes :
+- **Mac/Linux**
 
-```bash
-uv run jupyter notebook
-```
+  ```bash
+  python3 -m venv .venv
+  source .venv/bin/activate
+  python -m pip install --upgrade pip
+  python -m pip install -r requirements.txt
+  ```
 
-`uv run` garantit que l'interpréteur et les paquets provenant de `.venv` sont utilisés. Lorsque Jupyter s'ouvre dans votre navigateur, vous pouvez parcourir tous les notebooks du répertoire. Commencez par `rl_intro.ipynb` et exécutez les cellules de haut en bas. Chaque expérience (value iteration et bandit avec gradient de politique) affiche sa progression directement dans la sortie.
+- **Windows**
 
-## Mettre à jour les dépendances
+  ```powershell
+  python -m venv .venv
+  .venv\Scripts\activate
+  python -m pip install --upgrade pip
+  python -m pip install -r requirements.txt
+  ```
 
-Si vous ajoutez de nouveaux paquets en avançant dans les notebooks, continuez d'utiliser le même environnement :
-
-### Mac/Linux
-
-```bash
-source .venv/bin/activate
-uv pip install <nom-du-paquet>
-```
-
-### Windows
-
-```powershell
-.venv\Scripts\activate
-uv pip install <nom-du-paquet>
-```
-
-Cette approche garantit la reproductibilité et évite de recréer manuellement des environnements.
+**Notes :**
+- `requirements.txt` inclut Gymnasium (avec extras Atari), PyGame, PyTorch, Matplotlib, Pandas, etc.
